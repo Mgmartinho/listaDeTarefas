@@ -71,6 +71,24 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     padding-top: 8px;
   }
+
+  .container-empty {
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* ✅ isso alinha horizontalmente */
+    text-align: center;
+    gap: 16px;
+    color: #9495a5;
+  }
+  
+
+  .container-empty img{
+    width: 250px;
+    height: auto;
+    opacity: 0.5;
+  }
   
   .task-item,
   .content-tasks__actions {
