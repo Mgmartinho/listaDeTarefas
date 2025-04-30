@@ -77,9 +77,12 @@ function App() {
           </li>
         ))}
 
-        {filteredTasks().length === 0 && (
-          <Empty title="Nenhuma tarefa encontrada!"/>
-        )}
+      
+          <Empty 
+           show
+          title="Nenhuma tarefa encontrada!"
+          />
+        
 
         <li className="content-tasks__actions">
           <div>
