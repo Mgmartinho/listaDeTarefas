@@ -5,9 +5,10 @@
     min-height: 100vh;
     width: 100vw;
     position: relative;
-    background-color: #f0f2f5;
+    background-color: #f8f8f8;
     font-family: sans-serif;
     padding-top: 20px;
+    background-image: url("./assets/6601453.jpg"); 
   }
   
   .container-app input {
@@ -72,23 +73,7 @@
     padding-top: 8px;
   }
 
-  .container-empty {
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; /* ✅ isso alinha horizontalmente */
-    text-align: center;
-    gap: 16px;
-    color: #9495a5;
-  }
-  
 
-  .container-empty img{
-    width: 250px;
-    height: auto;
-    opacity: 0.5;
-  }
   
   .task-item,
   .content-tasks__actions {
