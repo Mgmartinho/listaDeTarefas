@@ -4,6 +4,9 @@ import { TaskType } from "./types/TaskTypes";
 import { v4 as uuidv4 } from "uuid";
 import { useLocalStorage } from "usehooks-ts";
 import Empty from "./components/Empty/Empty";
+import Tasks from "./components/Task/Tasks";
+import Filters from "./components/Filters/Filters";
+import { FilterType } from "./types/FilterType";
 
 //imagem
 
@@ -11,16 +14,18 @@ import Empty from "./components/Empty/Empty";
 function App() {
   const [input, setInput] = useState("");
   const [tasks, setTasks] = useLocalStorage<TaskType[]>("task-list", []);
-  //CONTADOR DE ITENS RESTANTES
-  const pendingTasksQtd = tasks.filter((tasks) => !tasks.done).length;
-  //FILTRAGEM POR TIPO
-  const [filter,setFilter] =useState<"all" | "done" | "pending">("all");
+ //FILTRAGEM POR TIPO
+  const [filter,setFilter] =useState<FilterType>("all");
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (input.length && event.key === "Enter") {
       setTasks([...tasks, { id: uuidv4(), title: input, done: false }]);
       setInput("");
       console.log("tag add");
     }
+  }
+
+  function handleSetTasks (newTasks: TaskType[]){
+    setTasks(newTasks);
   }
 
   function handleTaskToogle(id: string){
@@ -42,9 +47,10 @@ function App() {
     }
   }
 
-  function hendleUnchekedAllCompletedTasks(){
-    setTasks((prevState) => prevState.map((task) => task.done ? {...task, done: false} : task))
+  function handleSetFilter(newFilter: FilterType[]) {
+    setFilter(newFilter);
   }
+
 
 
   return (
@@ -63,18 +69,7 @@ function App() {
 
       <ul className="content-tasks">
         {filteredTasks().map((t) => (
-          <li
-            className={`task-item ${t.done ? "task-item__done" : ""}`}
-            key={t.id}
-          >
-            <input 
-              type="checkbox" 
-              checked={t.done} 
-              readOnly 
-              onChange={() => handleTaskToogle(t.id)}
-            />
-            {t.title}
-          </li>
+          <Tasks tasks={t} handleTaskToogle={handleTaskToogle}/>
         ))}
 
       
@@ -83,20 +78,12 @@ function App() {
           title="Nenhuma tarefa encontrada!"
           />
         
-
-        <li className="content-tasks__actions">
-          <div>
-            <a href="#">{pendingTasksQtd} Itens Restantes</a>
-          </div>
-          <div>
-            <a href="#" onClick={() => setFilter("all")}>Todas</a>
-            <a href="#" onClick={() => setFilter("pending")}>Ativas</a>
-            <a href="#" onClick={() => setFilter("done")}>Completadas</a>
-          </div>
-          <div>
-            <a href="#" onClick={hendleUnchekedAllCompletedTasks}>Limpar Completadas</a>
-          </div>
-        </li>
+          <Filters 
+          handleSetTasks={handleSetTasks} 
+          tasks={tasks}
+          handleSetFilter={handleSetFilter}
+          />
+       
       </ul>
     </div>
   );
